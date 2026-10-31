@@ -142,6 +142,6 @@ class Maze:
                     neighbor.visited = True
                     stack.append(neighbor)
 
-    def solve(self, visit):
+    def solve(self, draw_node):
         self.clear_visited()
-        return self.solver(self.first, self.last, visit)
+        return self.solver(self.first, self.last, draw_node)

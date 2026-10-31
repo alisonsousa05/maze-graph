@@ -64,7 +64,7 @@ src/
 
 ## Contribuir com um algoritmo
 
-Cada builder vive em `maze_builders/<nome>.py` e expõe `build(start)`. Cada solver vive em `maze_solvers/<nome>.py` e expõe `solve(start, end, visit)`. O `main.py` descobre o arquivo pelo nome, então nenhum registro manual é necessário.
+Cada builder vive em `maze_builders/<nome>.py` e expõe `build(start)`. Cada solver vive em `maze_solvers/<nome>.py` e expõe `solve(start, end, draw_node)`. A função `draw_node` só serve para desenhar o nó na tela; chame-a sempre que quiser desenhar um nó. O `main.py` descobre o arquivo pelo nome, então nenhum registro manual é necessário.
 
 Cada placeholder traz um cabeçalho com o modelo do labirinto, as funções disponíveis e a flag `visited`. Use `maze_builders/dead_end_dfs.py` e `maze_solvers/dfs.py` como referência pronta.
 

@@ -3,7 +3,7 @@ import random
 from maze import Node
 
 
-def solve(start: Node, end: Node, visit):
+def solve(start: Node, end: Node, draw_node):
     start.visited = True
 
     stack = [start]
@@ -11,7 +11,7 @@ def solve(start: Node, end: Node, visit):
     while len(stack) > 0:
         current = stack.pop()
         current.visited = True
-        visit(current)
+        draw_node(current)
 
         if current == end:
             return True

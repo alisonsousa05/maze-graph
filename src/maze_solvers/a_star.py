@@ -7,7 +7,7 @@ from maze import Node
 # ============================================================
 #
 # O que o solver faz:
-# - Recebe o no inicial (start), o no final (end) e a funcao visit.
+# - Recebe o no inicial (start), o no final (end) e a funcao draw_node.
 # - Procura um caminho de start ate end andando SO por paredes abertas.
 # - Retorne True se achou o end, ou False se nao achou.
 #
@@ -19,8 +19,8 @@ from maze import Node
 # Funcoes uteis (ver maze.py):
 # - node.get_reachable_neighbors() -> lista dos Nodes vizinhos que JA tem
 #   caminho aberto. Ja filtra is_path_free e a borda. Ordem aleatoria.
-# - visit(node) -> chame a cada no que o algoritmo visitar. Ela desenha o
-#   caminho na tela.
+# - draw_node(node) -> so serve para desenhar o no na tela. Chame toda vez
+#   que quiser desenhar um no (normalmente, a cada no que o algoritmo visita).
 #
 # Flag "visited" (IMPORTANTE):
 # - Node.visited e um booleano simples: True se o no ja foi visitado, False
@@ -53,5 +53,5 @@ from maze import Node
 # - A heuristica de Manhattan nunca superestima, entao o caminho achado e otimo.
 
 
-def solve(start: Node, end: Node, visit):
+def solve(start: Node, end: Node, draw_node):
     raise NotImplementedError("Implemente o A* aqui")
