@@ -66,16 +66,5 @@ src/
 
 Cada builder vive em `maze_builders/<nome>.py` e expõe `build(start)`. Cada solver vive em `maze_solvers/<nome>.py` e expõe `solve(start, end, visit)`. O `main.py` descobre o arquivo pelo nome, então nenhum registro manual é necessário.
 
-Cada placeholder traz um cabeçalho com o modelo do labirinto, as funções disponíveis e o contador `visited`. Use `maze_builders/dead_end_dfs.py` e `maze_solvers/dfs.py` como referência pronta.
+Cada placeholder traz um cabeçalho com o modelo do labirinto, as funções disponíveis e a flag `visited`. Use `maze_builders/dead_end_dfs.py` e `maze_solvers/dfs.py` como referência pronta.
 
-### O contador `visited`
-
-`Node.visited` é um contador inteiro, não um booleano. Ele é compartilhado pelas três passagens sobre o grafo: construir, resolver e desenhar. Assim nenhum nó precisa ser resetado entre uma passagem e outra.
-
-No início do seu algoritmo, pegue o número desta passagem a partir do `start`:
-
-```python
-ref_visited_num = start.visited + 1
-```
-
-Um nó ainda não foi visitado nesta passagem quando `node.visited != ref_visited_num`. Para marcar um nó como visitado, use `node.visited = ref_visited_num`. Não compare com `0` nem use `True`/`False`: a passagem anterior deixou números antigos nos nós.

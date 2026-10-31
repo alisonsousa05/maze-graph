@@ -4,15 +4,13 @@ from maze import Node
 
 
 def solve(start: Node, end: Node, visit):
-    ref_visited_num = start.visited + 1
-
-    start.visited = ref_visited_num
+    start.visited = True
 
     stack = [start]
 
     while len(stack) > 0:
         current = stack.pop()
-        current.visited = ref_visited_num
+        current.visited = True
         visit(current)
 
         if current == end:
@@ -21,7 +19,7 @@ def solve(start: Node, end: Node, visit):
         neighbors = current.get_reachable_neighbors()
 
         for n in neighbors:
-            if n != None and n.visited != ref_visited_num:
+            if n is not None and not n.visited:
                 stack.append(n)
 
     return False

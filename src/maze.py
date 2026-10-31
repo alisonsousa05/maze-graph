@@ -9,7 +9,7 @@ class Neighbor:
 
 class Node:
     def __init__(self, left_node, up_node, right_node, down_node, x, y):
-        self.visited = 0
+        self.visited = False
         self.left_node = Neighbor(left_node, False)
         self.up_node = Neighbor(up_node, False)
         self.right_node = Neighbor(right_node, False)
@@ -17,9 +17,9 @@ class Node:
         self.x = x
         self.y = y
 
-    def is_dead_end(self, ref_visited_num):
+    def is_dead_end(self):
         for link in (self.left_node, self.up_node, self.right_node, self.down_node):
-            if link.node is not None and link.node.visited != ref_visited_num:
+            if link.node is not None and not link.node.visited:
                 return False
         return True
 
@@ -94,21 +94,40 @@ class Maze:
         self.solver = solver
 
         builder(first)
+        self.clear_visited()
+
+    def clear_visited(self):
+        # Percorre a grade pelos .node estruturais (nao pelo is_path_free,
+        # que pode nao conectar tudo ainda) e zera visited em cada celula.
+        # Usa um set auxiliar para controlar quem ja foi percorrido, porque
+        # e justamente node.visited que esta sendo zerado aqui.
+        stack = [self.first]
+        seen = set()
+
+        while stack:
+            node = stack.pop()
+            if node in seen:
+                continue
+            seen.add(node)
+            node.visited = False
+
+            for link in (node.left_node, node.right_node, node.up_node, node.down_node):
+                if link.node is not None and link.node not in seen:
+                    stack.append(link.node)
 
     def open_entrance_and_exit(self):
         self.first.up_node.is_path_free = True
         self.last.down_node.is_path_free = True
 
     def apply_for_each_node(self, visit):
+        self.clear_visited()
+
         start = self.first
-
-        ref_visited_num = start.visited + 1
-
+        start.visited = True
         stack = [start]
 
         while stack:
             node = stack.pop()
-            node.visited = ref_visited_num
             visit(node)
 
             neighbors = [
@@ -119,8 +138,10 @@ class Maze:
             ]
 
             for neighbor in neighbors:
-                if neighbor is not None and neighbor.visited != ref_visited_num:
+                if neighbor is not None and not neighbor.visited:
+                    neighbor.visited = True
                     stack.append(neighbor)
 
     def solve(self, visit):
-        self.solver(self.first, self.last, visit)
+        self.clear_visited()
+        return self.solver(self.first, self.last, visit)

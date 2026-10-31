@@ -11,15 +11,13 @@ from maze import Node
 
 
 def build(start: Node):
-    ref_visited_num = start.visited + 1
-
     stack = [start]
-    start.visited = ref_visited_num
+    start.visited = True
 
     while stack:
         node = stack[-1]
 
-        if node.is_dead_end(ref_visited_num):
+        if node.is_dead_end():
             stack.pop()
             continue
 
@@ -27,8 +25,8 @@ def build(start: Node):
 
         for link in links:
             neighbor = link.node
-            if neighbor is not None and neighbor.visited != ref_visited_num:
+            if neighbor is not None and not neighbor.visited:
                 node.open_passage(link)
-                neighbor.visited = ref_visited_num
+                neighbor.visited = True
                 stack.append(neighbor)
                 break

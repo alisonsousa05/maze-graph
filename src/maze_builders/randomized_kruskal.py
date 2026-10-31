@@ -27,18 +27,16 @@ from maze import Node
 #   .node dos vizinhos. Eles existem independente de is_path_free, que ainda
 #   esta todo False no comeco da construcao.
 #
-# Contador "visited" (IMPORTANTE):
-# - Node.visited NAO e booleano. E um contador (int) compartilhado por todas as
-#   passagens (build, solve, desenho). Assim nao precisamos resetar cada no
-#   entre uma passagem e outra.
-# - No inicio, pegue o numero DESTA passagem a partir do start:
-#       ref_visited_num = start.visited + 1
-# - Um no ainda NAO foi visitado nesta passagem quando:
-#       node.visited != ref_visited_num
-# - Para marcar um no como visitado:
-#       node.visited = ref_visited_num
-# - Nunca compare com 0 nem use True/False. A passagem anterior deixou numeros
-#   antigos espalhados pelos nos.
+# Flag "visited" (IMPORTANTE):
+# - Node.visited e um booleano simples: True se o no ja foi visitado, False
+#   se ainda nao.
+# - O Maze chama self.clear_visited() depois do builder terminar, zerando
+#   todos os nos. Seu algoritmo pode assumir que comeca com visited = False
+#   em toda celula.
+# - Marque um no como visitado assim que entrar nele:
+#       node.visited = True
+# - Um no ainda NAO foi visitado quando:
+#       not node.visited
 #
 # Como testar:
 # - Rode a partir de src/:
