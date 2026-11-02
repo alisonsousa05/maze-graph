@@ -58,7 +58,8 @@ def solve(start: Node, end: Node, draw_node):
 
     while len(queue) > 0:
         current = queue.popleft()
-        draw_node(current)
+        current.state = "EXPANDED"
+        draw_node(current, "EXPANDED")
 
         if current == end:
             return True
