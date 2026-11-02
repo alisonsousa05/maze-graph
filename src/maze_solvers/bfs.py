@@ -69,6 +69,9 @@ def solve(start: Node, end: Node, draw_node):
         for n in neighbors:
             if not n.visited:
                 n.visited = True
+                n.visited = True
+                n.state = "DISCOVERED"
+                draw_node(n, "DISCOVERED")
                 queue.append(n)
 
     return False
